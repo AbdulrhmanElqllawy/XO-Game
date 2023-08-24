@@ -72,7 +72,7 @@ char *itoa(int value, char *buffer, int base)
     return reverse(buffer, 0, i - 1);
 }
 
-
+//check if the X player winnes or Y player or tie. 
 int check(int _1, int _2, int _3, int _4, int _5, int _6, int _7, int _8, int _9){
     
     if((_1 == X || _1 == O) && (_2 == X || _2 == O) && (_3 == X || _3 == O) && (_4 == X || _4 == O) && (_5 == X || _5 == O) && (_6 == X || _6 == O) && (_7 == X || _7 == O) && (_8 == X || _8 == O) && (_9 == X || _9 == O)){
@@ -115,6 +115,8 @@ int check(int _1, int _2, int _3, int _4, int _5, int _6, int _7, int _8, int _9
     }
 }
 
+
+//drowing map with numbers to help the players
 int map(int _1, int _2, int _3, int _4, int _5, int _6, int _7, int _8, int _9){
 
     char All[200] = "\n\n ";
@@ -233,6 +235,8 @@ int map(int _1, int _2, int _3, int _4, int _5, int _6, int _7, int _8, int _9){
     return 0;
 }
 
+
+//drowing winning map without numbers to display the game
 int wmap(int _1, int _2, int _3, int _4, int _5, int _6, int _7, int _8, int _9){
 
     char All[200] = "\n\n ";
@@ -351,65 +355,191 @@ int wmap(int _1, int _2, int _3, int _4, int _5, int _6, int _7, int _8, int _9)
     return 0;
 }
 
-// check(_1,_2,_3,_4,_5,_6,_7,_8,_9);
+
+//main function
 int main(){
+
+
+
+    //vars
     int blocks[9];
     blocks[0] = 10 ,blocks[1] = 20,blocks[2] = 30,blocks[3] = 40,blocks[4] = 50,blocks[5] = 60,blocks[6] = 70,blocks[7] = 80,blocks[8] = 90;
     int winner = 250,P,intr = X;
     char r[2] = "X\0",Ask[100] = "it is ",Pstr[5];
-    system("clear");
-    // printf("\n\n%d\n\n",isdigit('A'));
+    ////////////////////////////////////////////////
 
+
+
+
+    //clear all things before starting
+    system("clear");
+    ////////////////////////////////////////////////
+
+
+
+    //loop
     while(winner == NO){
+
+
+
+
+
+        //drowing map
         map(blocks[0],blocks[1],blocks[2],blocks[3],blocks[4],blocks[5],blocks[6],blocks[7],blocks[8]);
+        ////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+        //ask player to enter the number of the place he want to add X or O to it
         char Ask[100] = "it is ";
+
         strcat(Ask,r);
         strcat(Ask," round :\n");
         printf("\n\n%s",Ask);
         scanf("%s",&Pstr);
-        if(isdigit(Pstr[0]) == 0){
-            printf("\nError: Invalid place.\n\n");
-            return 3;
-        }else{
-            P = atoi(Pstr);
-        }
-        // P = 3;
-        if(blocks[P-1] == X || blocks[P-1] == O || P > 9 || P < 1){
-            printf("\nError: Invalid place.\n\n");
-            return 3;
-        }
-        blocks[(P-1)] = intr;
-        winner = check(blocks[0],blocks[1],blocks[2],blocks[3],blocks[4],blocks[5],blocks[6],blocks[7],blocks[8]);
+        ////////////////////////////////////////////////
 
+
+
+
+
+
+
+
+
+        //check if the number is valid or not
+        if(isdigit(Pstr[0]) == 0)
+        {
+
+            printf("\nError: Invalid place.\n\n");
+            return 3;
+
+        }else
+        {
+
+            P = atoi(Pstr);
+
+        }
+        
+
+        if(blocks[P-1] == X || blocks[P-1] == O || P > 9 || P < 1)
+        {
+
+            printf("\nError: Invalid place.\n\n");
+            return 3;
+
+        }
+        ////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+        //add X or O to the blocks array
+        blocks[(P-1)] = intr;
+        ////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+        //check if there a winner or not
+        winner = check(blocks[0],blocks[1],blocks[2],blocks[3],blocks[4],blocks[5],blocks[6],blocks[7],blocks[8]);
         system("clear");
-        if(winner == X ){
+
+
+        if(winner == X )
+        {
+
             wmap(blocks[0],blocks[1],blocks[2],blocks[3],blocks[4],blocks[5],blocks[6],blocks[7],blocks[8]);
             printf("\n\nWinner is X\n\n");
             return 1;
-        }else if(winner == O){
+
+        }else if(winner == O)
+        {
+
             wmap(blocks[0],blocks[1],blocks[2],blocks[3],blocks[4],blocks[5],blocks[6],blocks[7],blocks[8]);
             printf("\n\nWinner is O\n\n");
             return 2;
+
         }
-        if((int)r[0] == 88){
+        ////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+        //print the winner if there is winner
+        if((int)r[0] == 88)
+        {
+
             r[0] = 'O';
             intr = O;
-        }else if((int)r[0] == 79){
+
+        }else if((int)r[0] == 79)
+        {
+
             r[0] = 'X';
             intr = X;
+
         }
-        if(winner == 1250){
+        ////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+        //print TIE!! if there is no winner in this game
+        if(winner == TIE)
+        {
+
             system("clear");
+
+
             wmap(blocks[0],blocks[1],blocks[2],blocks[3],blocks[4],blocks[5],blocks[6],blocks[7],blocks[8]);
             printf("\n\nTIE!!\n\n");
             return 1;
+
         }
+        ////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
         
     }
-    
-
-    // printf("\n\n   |   |   \n-----------\n   |   |   \n-----------\n   |   |   \n\n\n");
-    
+    ////////////////////////////////////////////////
     
 
     return 0;
