@@ -8,6 +8,68 @@
 #define X 1
 #define NO 250
 
+void swap(char *x, char *y)
+{
+    char t = *x;
+    *x = *y;
+    *y = t;
+}
+char *reverse(char *buffer, int i, int j)
+{
+    while (i < j)
+    {
+        swap(&buffer[i++], &buffer[j--]);
+    }
+
+    return buffer;
+}
+char *itoa(int value, char *buffer, int base)
+{
+    // invalid input
+    if (base < 2 || base > 32)
+    {
+        return buffer;
+    }
+
+    // consider the absolute value of the number
+    int n = abs(value);
+
+    int i = 0;
+    while (n)
+    {
+        int r = n % base;
+
+        if (r >= 10)
+        {
+            buffer[i++] = 65 + (r - 10);
+        }
+        else
+        {
+            buffer[i++] = 48 + r;
+        }
+
+        n = n / base;
+    }
+
+    // if the number is 0
+    if (i == 0)
+    {
+        buffer[i++] = '0';
+    }
+
+    // If the base is 10 and the value is negative, the resulting string
+    // is preceded with a minus sign (-)
+    // With any other base, value is always considered unsigned
+    if (value < 0 && base == 10)
+    {
+        buffer[i++] = '-';
+    }
+
+    buffer[i] = '\0'; // null terminate string
+
+    // reverse the string and return it
+    return reverse(buffer, 0, i - 1);
+}
 
 
 int check(int _1, int _2, int _3, int _4, int _5, int _6, int _7, int _8, int _9){
@@ -289,9 +351,9 @@ int main(){
     int blocks[9];
     blocks[0] = 10 ,blocks[1] = 20,blocks[2] = 30,blocks[3] = 40,blocks[4] = 50,blocks[5] = 60,blocks[6] = 70,blocks[7] = 80,blocks[8] = 90;
     int winner = 250,P,intr = X;
-    char r[2] = "X\0",Ask[100] = "it is ";
+    char r[2] = "X\0",Ask[100] = "it is ",Pstr[5];
     system("clear");
-
+    // printf("\n\n%d\n\n",isdigit('A'));
 
     while(winner == NO){
         map(blocks[0],blocks[1],blocks[2],blocks[3],blocks[4],blocks[5],blocks[6],blocks[7],blocks[8]);
@@ -299,7 +361,13 @@ int main(){
         strcat(Ask,r);
         strcat(Ask," round :\n");
         printf("\n\n%s",Ask);
-        scanf("%d",&P);
+        scanf("%s",&Pstr);
+        if(isdigit(Pstr[0]) == 0){
+            printf("\nError: Invalid place.\n\n");
+            return 3;
+        }else{
+            P = atoi(Pstr);
+        }
         // P = 3;
         if(blocks[P-1] == X || blocks[P-1] == O || P > 9 || P < 1){
             printf("\nError: Invalid place.\n\n");
