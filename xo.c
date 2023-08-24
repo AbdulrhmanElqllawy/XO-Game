@@ -7,6 +7,7 @@
 #define O 0
 #define X 1
 #define NO 250
+#define TIE 1250
 
 void swap(char *x, char *y)
 {
@@ -74,6 +75,10 @@ char *itoa(int value, char *buffer, int base)
 
 int check(int _1, int _2, int _3, int _4, int _5, int _6, int _7, int _8, int _9){
     
+    if((_1 == X || _1 == O) && (_2 == X || _2 == O) && (_3 == X || _3 == O) && (_4 == X || _4 == O) && (_5 == X || _5 == O) && (_6 == X || _6 == O) && (_7 == X || _7 == O) && (_8 == X || _8 == O) && (_9 == X || _9 == O)){
+        return TIE;
+    }
+
     if(_1 == _2 && _2 == _3)
     {
         return _1;
@@ -375,6 +380,7 @@ int main(){
         }
         blocks[(P-1)] = intr;
         winner = check(blocks[0],blocks[1],blocks[2],blocks[3],blocks[4],blocks[5],blocks[6],blocks[7],blocks[8]);
+
         system("clear");
         if(winner == X ){
             wmap(blocks[0],blocks[1],blocks[2],blocks[3],blocks[4],blocks[5],blocks[6],blocks[7],blocks[8]);
@@ -391,6 +397,12 @@ int main(){
         }else if((int)r[0] == 79){
             r[0] = 'X';
             intr = X;
+        }
+        if(winner == 1250){
+            system("clear");
+            wmap(blocks[0],blocks[1],blocks[2],blocks[3],blocks[4],blocks[5],blocks[6],blocks[7],blocks[8]);
+            printf("\n\nTIE!!\n\n");
+            return 1;
         }
         
     }
